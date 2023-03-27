@@ -1,0 +1,57 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="Theme_Entries">
+        <item>App Original Theme</item>
+        <item>Dark Theme</item>
+
+    </string-array>
+    <string-array name="Themes_Values">
+        <item>1</item>
+        <item>2</item>
+
+
+    </string-array>
+
+    <string-array name="Notifvals">
+        <item>Turn on</item>
+        <item>Turn off</item>
+    </string-array>
+
+    <string-array name="HSval">
+        <item>Scroll with sidebar</item>
+        <item>Touch to scroll</item>
+    </string-array>
+
+    <string-array name="Langvals">
+        <item>English</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>Swahili</item>
+        <item>Mandarin</item>
+    </string-array>
+
+    <string-array name="Unitvals">
+        <item>Metric</item>
+        <item>Imperial A.K.A MERCAN</item>
+    </string-array>
+
+    <string-array name="Unitvals_value">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="SecurityAnnount">
+        <item>Password Changed</item>
+        <item></item>
+    </string-array>
+</resources>

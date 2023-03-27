@@ -1,0 +1,111 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<PreferenceCategory app:title="Settings" app:icon="@drawable/ic_notifications_black_24dp">
+
+
+    <!--Theme Setup-->
+
+    <ListPreference
+        app:key="key_theme"
+        app:defaultValue="1"
+        app:entries="@array/Theme_Entries"
+        app:entryValues="@array/Themes_Values"
+        app:enabled="true"
+        app:useSimpleSummaryProvider="true"
+        app:title="Force Sync ->"
+        app:summary=" " />
+
+
+    <!--Measurement Setup-->
+    <ListPreference
+        app:defaultValue="reply"
+        app:entries="@array/Unitvals"
+        app:entryValues="@array/Unitvals_value"
+        app:key="key_units"
+        app:title="Support"
+        app:summary="Change the measurement units"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true"
+        android:defaultValue="Metric"
+        android:entries="@array/Unitvals"
+        android:entryValues="@array/Unitvals_value"
+
+        />
+
+
+    <!--Measurement Setup-->
+    <ListPreference
+        app:defaultValue="reply"
+        app:entries="@array/Unitvals"
+        app:entryValues="@array/Unitvals_value"
+        app:key="key_units"
+        app:title="Change Memory Type"
+        app:summary="Change the storage units"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true"
+        android:defaultValue="Metric"
+        android:entries="@array/Unitvals"
+        android:entryValues="@array/Unitvals_value"
+
+        />
+
+    <!--Measurement Setup-->
+    <ListPreference
+        app:defaultValue="reply"
+        app:entries="@array/Unitvals"
+        app:entryValues="@array/Unitvals_value"
+        app:key="key_units"
+        app:title="Chamge sync device"
+        app:summary="Change the way your reciveing information"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true"
+        android:defaultValue="Metric"
+        android:entries="@array/Unitvals"
+        android:entryValues="@array/Unitvals_value"
+
+        />
+    <ListPreference
+        app:title="Visit our GitHub!"
+        app:summary="Website">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://github.com/theRedAces/life_is_well"/>
+    </ListPreference>
+
+
+
+
+
+</PreferenceCategory>
+
+
+    <!--Notification Setup-->
+    <PreferenceCategory app:title="Messages"
+        app:icon="@drawable/ic_notifications_black_24dp">
+        <SwitchPreferenceCompat
+            app:key="Messages"
+            app:title="Finger lock for memory"
+            app:summaryOn="All notifications are 'Off!'"
+            app:summaryOff="All notification are 'ON!' "/>
+
+        <SeekBarPreference
+            app:dependency="Messages"
+            app:title="Volume"
+            app:shouldDisableView="true"
+            app:summaryOff="Noftifications needs to be 'ON!'"
+            app:showSeekBarValue="true"/>
+
+
+        <!--Security and Account Setup-->
+
+
+    </PreferenceCategory>
+
+
+
+
+
+
+</PreferenceScreen>

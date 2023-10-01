@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
 
             searchView = findViewById(R.id.search_view)
 
+
+
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     // Perform search

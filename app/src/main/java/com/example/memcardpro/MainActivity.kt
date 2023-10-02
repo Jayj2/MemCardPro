@@ -1,7 +1,12 @@
 package com.example.memcardpro
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -10,10 +15,16 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.memcardpro.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var searchView: SearchView
+    private lateinit var searchHistoryHelper: SearchHistoryHelper
+
+
+    private lateinit var searchHistoryDialog: AlertDialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +32,34 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        searchHistoryHelper = SearchHistoryHelper(this)
 
+        searchHistoryHelper.initialize(this)
+
+        val searchHistoryListView = ListView(this)
+        val searchHistoryAdapter: ArrayAdapter<String> = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            searchHistoryHelper.getSearchHistory().toList()
+        )
+        searchHistoryListView.adapter = searchHistoryAdapter
+        searchHistoryListView.setOnItemClickListener { _, _, position, _ ->
+            val query = searchHistoryAdapter.getItem(position)
+            searchView.setQuery(query, true)
+            searchHistoryDialog.dismiss()
+        }
+
+        searchHistoryDialog = AlertDialog.Builder(this)
+            .setTitle("Search History")
+            .setView(searchHistoryListView)
+            .setPositiveButton("Clear") { _, _ ->
+                searchHistoryHelper.clearSearchHistory()
+                searchHistoryAdapter.clear()
+            }
+            .setNegativeButton("Close") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -35,8 +73,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
 
 
     }
@@ -67,47 +103,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    
-//
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.menu_search, menu)
-//        val searchItem = menu.findItem(R.id.action_search)
-//        val searchView = searchItem.actionView as SearchView
-//        searchView.setOnQueryTextListener(this)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
+    class SearchHistoryHelper(mainActivity: com.example.memcardpro.MainActivity) {
+        private lateinit var sharedPrefs: SharedPreferences
+        private lateinit var editor: SharedPreferences.Editor
 
-//    override fun onQueryTextSubmit(query: String): Boolean {
-//        performSearch(query)
-//        return true
-//    }
-//
-//    override fun onQueryTextChange(newText: String): Boolean {
-//        performSearch(newText)
-//        return true
-//    }
-//
-//    private fun performSearch(query: String) {
-//        // Perform search and update search results
-//    }
-//
-//
-//    private fun performSearch(query: String) {
-//        val files = getFilesMatchingQuery(query)
-//        updateSearchResults(files)
-//    }
-//
-//    private fun getFilesMatchingQuery(query: String): List<File> {
-//        val rootDir = requireContext().getExternalFilesDir(null)
-//        val files = rootDir?.listFiles { file ->
-//            file.isFile && file.name.contains(query, true)
-//        }
-//        return files?.toList() ?: emptyList()
-//    }
-//
-//    private fun updateSearchResults(files: List<File>) {
-//        val adapter = recyclerView.adapter as FileListAdapter
-//        adapter.submitList(files)
-//    }
+        fun initialize(context: Context) {
+            sharedPrefs = context.getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
+            editor = sharedPrefs.edit()
+        }
 
+        fun saveSearchQuery(query: String) {
+            val historySet = getSearchHistory().toMutableSet()
+            historySet.add(query)
+            editor.putStringSet("search_history", historySet)
+            editor.apply()
+        }
+
+        fun getSearchHistory(): Set<String> {
+            return sharedPrefs.getStringSet("search_history", HashSet()) ?: HashSet()
+        }
+
+        fun clearSearchHistory() {
+            editor.clear()
+            editor.apply()
+        }
+    }
 }
+
+

@@ -29,13 +29,29 @@ class HomeFragment : Fragment() {
         }
     }
 
+    data class VirtualCard(val name: String, val description: String)
+
+    private val virtualCards = mutableListOf<VirtualCard>()
+
+    private fun addVirtualCard(cardName: String, cardDescription: String) {
+        val virtualCard = VirtualCard(cardName, cardDescription)
+        virtualCards.add(virtualCard)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        addVirtualCard("New Card Name", "Card Description")
+
+        return view
     }
+
+
+
 
     companion object {
         /**

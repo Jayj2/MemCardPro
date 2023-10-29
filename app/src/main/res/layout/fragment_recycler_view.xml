@@ -1,0 +1,11 @@
+<!-- item_card.xml -->
+   <Button
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/recycler_view_item"
+    android:layout_margin="8dp"
+    android:background="@color/white"
+    android:gravity="center"
+    android:padding="16dp" />
